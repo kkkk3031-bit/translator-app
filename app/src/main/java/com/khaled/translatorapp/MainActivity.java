@@ -49,6 +49,15 @@ public class MainActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        // Stop the single worker thread so a finished Activity doesn't leave a
+        // non-daemon thread lingering (and, with an in-flight request, holding
+        // a reference to this Activity).
+        executor.shutdownNow();
+        super.onDestroy();
+    }
+
     private void runTranslate() {
         String text = inputText.getText().toString().trim();
         if (text.isEmpty()) return;
@@ -60,11 +69,13 @@ public class MainActivity extends Activity {
             try {
                 Translator.Result result = Translator.translate(text, "auto", TARGET_LANG);
                 mainHandler.post(() -> {
+                    if (isFinishing() || isDestroyed()) return;
                     progress.setVisibility(View.GONE);
                     outputText.setText(result.translatedText);
                 });
             } catch (Exception e) {
                 mainHandler.post(() -> {
+                    if (isFinishing() || isDestroyed()) return;
                     progress.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this, "Translation failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });

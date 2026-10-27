@@ -59,16 +59,26 @@ public class ProcessTextActivity extends Activity {
             try {
                 Translator.Result result = Translator.translate(text, "auto", MainActivity.TARGET_LANG);
                 mainHandler.post(() -> {
+                    if (isFinishing() || isDestroyed()) return;
                     progress.setVisibility(View.GONE);
                     translatedText = result.translatedText;
                     translatedView.setText(translatedText);
                 });
             } catch (Exception e) {
                 mainHandler.post(() -> {
+                    if (isFinishing() || isDestroyed()) return;
                     progress.setVisibility(View.GONE);
                     translatedView.setText("Translation failed: " + e.getMessage());
                 });
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Stop the worker thread so a dismissed dialog Activity doesn't leave a
+        // non-daemon thread lingering with a reference to this Activity.
+        executor.shutdownNow();
+        super.onDestroy();
     }
 }
