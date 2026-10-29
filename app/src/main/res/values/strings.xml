@@ -16,6 +16,11 @@
     <string name="replace">Replace</string>
     <string name="back">Back</string>
     <string name="search">Search</string>
+    <string name="translate_as_you_type">Translate as you type</string>
+    <plurals name="char_count">
+        <item quantity="one">%d character</item>
+        <item quantity="other">%d characters</item>
+    </plurals>
     <string name="tip_process_text">Tip: select text in any app and choose \"Translate\" from the popup menu to translate it instantly.</string>
 
     <string name="lang_auto">Detect language</string>
@@ -29,6 +34,8 @@
     <string name="all_languages">All languages</string>
 
     <string name="history">History</string>
+    <string name="history_langs">%1$s → %2$s</string>
+    <string name="history_meta">%1$s · %2$s</string>
     <string name="history_empty">Your translations will show up here.</string>
     <string name="history_no_matches">No translations match your search.</string>
     <string name="clear_history">Clear history</string>

@@ -69,11 +69,12 @@ final class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Holder> {
     public void onBindViewHolder(@NonNull Holder h, int position) {
         HistoryEntry e = entries.get(position);
         String from = e.effectiveSourceLang();
-        String langs = (Languages.AUTO.equals(from) ? "?" : from.toUpperCase(Locale.ROOT))
-                + " → " + e.targetLang.toUpperCase(Locale.ROOT);
+        String langs = context.getString(R.string.history_langs,
+                Languages.AUTO.equals(from) ? "?" : from.toUpperCase(Locale.ROOT),
+                e.targetLang.toUpperCase(Locale.ROOT));
         CharSequence when = DateUtils.getRelativeTimeSpanString(e.createdAt,
                 System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS);
-        h.meta.setText(langs + " · " + when);
+        h.meta.setText(context.getString(R.string.history_meta, langs, when));
         h.source.setText(e.sourceText);
         TextActions.applyDirection(h.source, from);
         h.translation.setText(e.translatedText);

@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAlignment="viewStart"
+            android:textAlignment="textStart"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorOnSurfaceVariant" />
 
@@ -41,11 +41,11 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAlignment="viewStart"
+            android:textAlignment="textStart"
             android:textAppearance="?attr/textAppearanceBodyLarge" />
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/historyStar"
         style="@style/Widget.Material3.Button.IconButton"
         android:layout_width="wrap_content"

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">المترجم</string>
+    <string name="process_text_label">ترجمة</string>
+    <string name="input_hint">اكتب نصًا بأي لغة</string>
+    <string name="translate">ترجمة</string>
+    <string name="copy_translation">نسخ الترجمة</string>
+    <string name="copy">نسخ</string>
+    <string name="close">إغلاق</string>
+    <string name="copied">تم النسخ</string>
+    <string name="paste">لصق</string>
+    <string name="clear_input">مسح النص</string>
+    <string name="speak">استماع</string>
+    <string name="share">مشاركة</string>
+    <string name="open_in_app">فتح في المترجم</string>
+    <string name="replace">استبدال</string>
+    <string name="back">رجوع</string>
+    <string name="search">بحث</string>
+    <string name="translate_as_you_type">الترجمة أثناء الكتابة</string>
+    <plurals name="char_count">
+        <item quantity="zero">%d حرف</item>
+        <item quantity="one">حرف واحد</item>
+        <item quantity="two">حرفان</item>
+        <item quantity="few">%d أحرف</item>
+        <item quantity="many">%d حرفًا</item>
+        <item quantity="other">%d حرف</item>
+    </plurals>
+    <string name="tip_process_text">تلميح: حدّد نصًا في أي تطبيق واختر \"ترجمة\" من القائمة المنبثقة لترجمته فورًا.</string>
+
+    <string name="lang_auto">اكتشاف اللغة</string>
+    <string name="detected_language">اللغة المكتشفة: %1$s</string>
+    <string name="pick_source">الترجمة من</string>
+    <string name="pick_target">الترجمة إلى</string>
+    <string name="swap_languages">تبديل اللغتين</string>
+    <string name="swap_needs_language">اختر لغة المصدر (أو ترجم مرة واحدة ليتم اكتشافها) قبل التبديل.</string>
+    <string name="search_languages">ابحث عن لغة</string>
+    <string name="recent_languages">الأخيرة</string>
+    <string name="all_languages">كل اللغات</string>
+
+    <string name="history">السجل</string>
+    <string name="history_langs">%1$s ← %2$s</string>
+    <string name="history_meta">%1$s · %2$s</string>
+    <string name="history_empty">ستظهر ترجماتك هنا.</string>
+    <string name="history_no_matches">لا توجد ترجمات تطابق بحثك.</string>
+    <string name="clear_history">مسح السجل</string>
+    <string name="clear_history_message">حذف كل الترجمات باستثناء المميّزة بنجمة؟</string>
+    <string name="clear">مسح</string>
+    <string name="cancel">إلغاء</string>
+    <string name="deleted">تم الحذف</string>
+    <string name="undo">تراجع</string>
+    <string name="star">تمييز بنجمة</string>
+    <string name="unstar">إزالة النجمة</string>
+
+    <string name="tts_unavailable">تحويل النص إلى كلام غير متاح على هذا الجهاز.</string>
+    <string name="tts_no_voice">لا يوجد صوت مثبّت للغة %1$s. يمكنك إضافة صوت من إعدادات تحويل النص إلى كلام في النظام.</string>
+
+    <string name="error_offline">أنت غير متصل بالإنترنت. اتصل بالإنترنت وحاول مرة أخرى.</string>
+    <string name="error_timeout">استغرقت خدمة الترجمة وقتًا طويلًا للرد. حاول مرة أخرى.</string>
+    <string name="error_rate_limited">ترجمات كثيرة في وقت قصير. انتظر دقيقة وحاول مرة أخرى.</string>
+    <string name="error_server">تواجه خدمة الترجمة مشكلة. حاول مرة أخرى بعد قليل.</string>
+    <string name="error_bad_response">وصل رد غير متوقع من خدمة الترجمة.</string>
+    <string name="error_network">تعذّر الوصول إلى خدمة الترجمة. تحقق من اتصالك.</string>
+</resources>

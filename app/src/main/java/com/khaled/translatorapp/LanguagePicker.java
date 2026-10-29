@@ -1,5 +1,6 @@
 package com.khaled.translatorapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +33,7 @@ final class LanguagePicker {
     static void show(Context context, boolean includeAuto, String current, List<String> recents,
                      Listener listener) {
         BottomSheetDialog dialog = new BottomSheetDialog(context);
+        @SuppressLint("InflateParams") // the dialog supplies the parent
         View root = LayoutInflater.from(context).inflate(R.layout.sheet_language_picker, null);
         dialog.setContentView(root);
         dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);

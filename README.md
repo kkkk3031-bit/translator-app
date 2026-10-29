@@ -11,6 +11,8 @@ Native Android app that translates any text to Arabic — both from its own scre
 - Text-to-speech for translations
 - Paste chip when the clipboard has text
 - Correct right-to-left layout for Arabic, Hebrew, Persian, Urdu, and more
+- Translate as you type (toggle in the ⋮ menu), throttled to go easy on the endpoint
+- Full Arabic interface, Material You colors on Android 12+, dark mode, adaptive/themed launcher icon
 
 ## How it works
 

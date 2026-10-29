@@ -19,7 +19,9 @@ import java.util.concurrent.Future;
 /**
  * Runs translations off the main thread and holds the latest result, so it
  * survives rotation and an in-flight request isn't re-sent. Successful
- * translations are recorded in {@link HistoryStore}.
+ * translations are recorded in {@link HistoryStore}, except ones made while
+ * typing: those are recorded by {@link #commitToHistory()} once the user acts
+ * on them, so history doesn't fill up with half-typed text.
  */
 public class TranslateViewModel extends AndroidViewModel {
 
@@ -32,6 +34,8 @@ public class TranslateViewModel extends AndroidViewModel {
         final String detectedLanguage;
         /** String resource of the error message, or 0 if no error. */
         final int errorRes;
+        /** Whether this result is already in history. */
+        volatile boolean recorded;
 
         private State(boolean loading, String sourceText, String sourceLang, String targetLang,
                       @Nullable String translation, String detectedLanguage, int errorRes) {
@@ -74,6 +78,11 @@ public class TranslateViewModel extends AndroidViewModel {
     }
 
     void translate(String text, String sourceLang, String targetLang) {
+        translate(text, sourceLang, targetLang, true);
+    }
+
+    /** @param record false for as-you-type results; see {@link #commitToHistory()}. */
+    void translate(String text, String sourceLang, String targetLang, boolean record) {
         cancelInFlight();
         final int gen = generation;
 
@@ -89,7 +98,7 @@ public class TranslateViewModel extends AndroidViewModel {
                 TranslationResult r = engine.translate(text, sourceLang, targetLang);
                 result = new State(false, text, sourceLang, targetLang, r.translatedText,
                         r.detectedSourceLanguage, 0);
-                record(result);
+                if (record) record(result);
             } catch (TranslationException e) {
                 if (e.kind == TranslationException.Kind.CANCELLED) return;
                 result = new State(false, text, sourceLang, targetLang, null, "", e.kind.messageRes());
@@ -105,8 +114,24 @@ public class TranslateViewModel extends AndroidViewModel {
     /** Shows a past translation without hitting the network. */
     void show(HistoryEntry e) {
         cancelInFlight();
-        state.setValue(new State(false, e.sourceText, e.sourceLang, e.targetLang, e.translatedText,
-                e.detectedLang, 0));
+        State s = new State(false, e.sourceText, e.sourceLang, e.targetLang, e.translatedText,
+                e.detectedLang, 0);
+        s.recorded = true;
+        state.setValue(s);
+    }
+
+    /** Clears the result, e.g. when the input is emptied. */
+    void clear() {
+        cancelInFlight();
+        state.setValue(null);
+    }
+
+    /** Records the current result in history if it isn't there yet. */
+    void commitToHistory() {
+        State s = state.getValue();
+        if (s == null || !s.hasTranslation() || s.recorded) return;
+        s.recorded = true;
+        executor.execute(() -> record(s));
     }
 
     private void cancelInFlight() {
@@ -116,6 +141,7 @@ public class TranslateViewModel extends AndroidViewModel {
 
     private void record(State s) {
         if (s.translation == null || s.translation.isEmpty()) return;
+        s.recorded = true;
         try {
             HistoryStore.get(getApplication()).add(s.sourceText, s.translation, s.sourceLang,
                     s.targetLang, s.detectedLanguage);

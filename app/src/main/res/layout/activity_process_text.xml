@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="3"
-        android:textAlignment="viewStart"
+        android:textAlignment="textStart"
         android:textColor="?attr/colorOnSurfaceVariant" />
 
     <View
@@ -55,9 +55,11 @@
         android:id="@+id/translatedText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:accessibilityLiveRegion="polite"
+        android:lineSpacingMultiplier="1.15"
         android:maxLines="12"
         android:scrollbars="vertical"
-        android:textAlignment="viewStart"
+        android:textAlignment="textStart"
         android:textIsSelectable="true"
         android:textSize="18sp" />
 
