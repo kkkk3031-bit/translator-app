@@ -29,6 +29,7 @@ public class ProcessTextActivity extends AppCompatActivity {
     private Button speakButton;
     private Button shareButton;
     private Button replaceButton;
+    private Button retryButton;
     private TranslateViewModel viewModel;
     private LanguagePrefs prefs;
     private Speaker speaker;
@@ -57,6 +58,7 @@ public class ProcessTextActivity extends AppCompatActivity {
         speakButton = findViewById(R.id.speakButton);
         shareButton = findViewById(R.id.shareButton);
         replaceButton = findViewById(R.id.replaceButton);
+        retryButton = findViewById(R.id.retryButton);
 
         originalView.setText(text);
         updateTargetChip();
@@ -72,6 +74,7 @@ public class ProcessTextActivity extends AppCompatActivity {
                     translate();
                 }));
         findViewById(R.id.closeButton).setOnClickListener(v -> finish());
+        retryButton.setOnClickListener(v -> translate());
         copyButton.setOnClickListener(v -> withTranslation(t -> {
             TextActions.copy(this, t);
             finish();
@@ -142,6 +145,8 @@ public class ProcessTextActivity extends AppCompatActivity {
         detectedView.setText(showDetected
                 ? getString(R.string.detected_language, Languages.displayName(this, s.detectedLanguage))
                 : "");
+
+        retryButton.setVisibility(!loading && s.errorRes != 0 ? View.VISIBLE : View.GONE);
 
         boolean has = s != null && s.hasTranslation();
         copyButton.setEnabled(has);
