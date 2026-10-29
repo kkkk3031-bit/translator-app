@@ -2,14 +2,46 @@
 <resources>
     <string name="app_name">Translator</string>
     <string name="process_text_label">Translate</string>
-    <string name="main_title">Translate to Arabic</string>
     <string name="input_hint">Enter text in any language</string>
     <string name="translate">Translate</string>
     <string name="copy_translation">Copy translation</string>
     <string name="copy">Copy</string>
     <string name="close">Close</string>
     <string name="copied">Copied</string>
-    <string name="tip_process_text">Tip: select text in any other app and choose \"Translate\" from the popup menu to translate it to Arabic instantly.</string>
+    <string name="paste">Paste</string>
+    <string name="clear_input">Clear text</string>
+    <string name="speak">Listen</string>
+    <string name="share">Share</string>
+    <string name="open_in_app">Open in Translator</string>
+    <string name="replace">Replace</string>
+    <string name="back">Back</string>
+    <string name="search">Search</string>
+    <string name="tip_process_text">Tip: select text in any app and choose \"Translate\" from the popup menu to translate it instantly.</string>
+
+    <string name="lang_auto">Detect language</string>
+    <string name="detected_language">Detected: %1$s</string>
+    <string name="pick_source">Translate from</string>
+    <string name="pick_target">Translate to</string>
+    <string name="swap_languages">Swap languages</string>
+    <string name="swap_needs_language">Pick a source language (or translate once so it can be detected) before swapping.</string>
+    <string name="search_languages">Search languages</string>
+    <string name="recent_languages">Recent</string>
+    <string name="all_languages">All languages</string>
+
+    <string name="history">History</string>
+    <string name="history_empty">Your translations will show up here.</string>
+    <string name="history_no_matches">No translations match your search.</string>
+    <string name="clear_history">Clear history</string>
+    <string name="clear_history_message">Delete all translations except starred ones?</string>
+    <string name="clear">Clear</string>
+    <string name="cancel">Cancel</string>
+    <string name="deleted">Deleted</string>
+    <string name="undo">Undo</string>
+    <string name="star">Star</string>
+    <string name="unstar">Remove star</string>
+
+    <string name="tts_unavailable">Text-to-speech isn\'t available on this device.</string>
+    <string name="tts_no_voice">No voice installed for %1$s. You can add one in system Text-to-speech settings.</string>
 
     <string name="error_offline">You\'re offline. Connect to the internet and try again.</string>
     <string name="error_timeout">The translation service took too long to respond. Try again.</string>

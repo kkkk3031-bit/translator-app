@@ -2,6 +2,16 @@
 
 Native Android app that translates any text to Arabic — both from its own screen and system-wide.
 
+## Features
+
+- Translate between 100+ languages (auto-detect source; Arabic is the default target), with a swap button and recently used languages pinned in the picker
+- Works system-wide: select text in any app → **Translate** shows a popup with the translation, a language chip, Listen, Share, Open in app, Copy, and **Replace** (for editable fields)
+- **Share → Translator** from any app
+- History of the last 200 translations: search, star favorites (kept forever), swipe to delete with undo, tap to reopen
+- Text-to-speech for translations
+- Paste chip when the clipboard has text
+- Correct right-to-left layout for Arabic, Hebrew, Persian, Urdu, and more
+
 ## How it works
 
 - **MainActivity** — paste/type text in any language, tap Translate, get the Arabic translation. Auto-detects the source language.
