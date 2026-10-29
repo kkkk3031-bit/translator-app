@@ -1,65 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  The original is capped at a few lines and the translation scrolls inside
+  itself, so the buttons stay on screen however long the selection is.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:maxHeight="480dp">
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/originalText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="?attr/colorOutlineVariant" />
+
+    <TextView
+        android:id="@+id/translatedText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="12"
+        android:scrollbars="vertical"
+        android:textSize="18sp"
+        android:textDirection="rtl"
+        android:textAlignment="viewStart"
+        android:textIsSelectable="true" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/originalText"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/copyButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#606060"
-            android:textIsSelectable="true" />
+            android:layout_weight="1"
+            android:text="@string/copy" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="#DDDDDD" />
-
-        <TextView
-            android:id="@+id/translatedText"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textDirection="rtl"
-            android:textAlignment="viewStart"
-            android:textIsSelectable="true" />
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/copyButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Copy" />
-
-            <Button
-                android:id="@+id/closeButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:text="Close" />
-        </LinearLayout>
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="@string/close"
+            style="?attr/materialButtonOutlinedStyle" />
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Translate to Arabic"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:text="@string/main_title"
+        android:textAppearance="?attr/textAppearanceTitleLarge" />
 
     <EditText
         android:id="@+id/inputText"
@@ -19,10 +19,10 @@
         android:layout_weight="1"
         android:layout_marginTop="12dp"
         android:gravity="top|start"
-        android:hint="Enter text in any language"
+        android:hint="@string/input_hint"
         android:inputType="textMultiLine|textCapSentences"
         android:padding="12dp"
-        android:background="#F0F0F0" />
+        android:background="?attr/colorSurfaceContainerHigh" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Translate" />
+            android:text="@string/translate" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -53,7 +53,7 @@
         android:layout_weight="1"
         android:layout_marginTop="12dp"
         android:padding="12dp"
-        android:background="#E8F0FE"
+        android:background="?attr/colorSecondaryContainer"
         android:textDirection="rtl"
         android:textAlignment="viewStart"
         android:textIsSelectable="true" />
@@ -63,14 +63,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Copy translation" />
+        android:text="@string/copy_translation"
+        style="?attr/materialButtonOutlinedStyle" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Tip: select text in any other app and choose &quot;Translate&quot; from the popup menu to translate it to Arabic instantly."
+        android:text="@string/tip_process_text"
         android:textSize="12sp"
-        android:textColor="#808080" />
+        android:textColor="?attr/colorOnSurfaceVariant" />
 
 </LinearLayout>

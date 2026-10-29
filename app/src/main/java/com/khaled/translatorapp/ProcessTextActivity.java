@@ -1,84 +1,75 @@
 package com.khaled.translatorapp;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Handles ACTION_PROCESS_TEXT: shown when the user selects text in another
  * app and taps "Translate" in the Cut/Copy/Paste popup. Always translates
  * the selection to Arabic, no language picker.
  */
-public class ProcessTextActivity extends Activity {
+public class ProcessTextActivity extends AppCompatActivity {
 
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final Handler mainHandler = new Handler(Looper.getMainLooper());
-
-    private String translatedText = "";
+    private TextView translatedView;
+    private ProgressBar progress;
+    private Button copyButton;
+    private TranslateViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_process_text);
-
-        TextView originalView = findViewById(R.id.originalText);
-        TextView translatedView = findViewById(R.id.translatedText);
-        ProgressBar progress = findViewById(R.id.progress);
-        Button copyButton = findViewById(R.id.copyButton);
-        Button closeButton = findViewById(R.id.closeButton);
 
         CharSequence selected = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
         String text = selected == null ? "" : selected.toString().trim();
-
         if (text.isEmpty()) {
             finish();
             return;
         }
 
+        setContentView(R.layout.activity_process_text);
+        TextView originalView = findViewById(R.id.originalText);
+        translatedView = findViewById(R.id.translatedText);
+        progress = findViewById(R.id.progress);
+        copyButton = findViewById(R.id.copyButton);
+        Button closeButton = findViewById(R.id.closeButton);
+
         originalView.setText(text);
         closeButton.setOnClickListener(v -> finish());
         copyButton.setOnClickListener(v -> {
-            if (translatedText.isEmpty()) return;
-            ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            cm.setPrimaryClip(ClipData.newPlainText("translation", translatedText));
+            TranslateViewModel.State s = viewModel.getState().getValue();
+            if (s == null || s.translation == null || s.translation.isEmpty()) return;
+            ClipboardManager cm = getSystemService(ClipboardManager.class);
+            cm.setPrimaryClip(ClipData.newPlainText("translation", s.translation));
             finish();
         });
 
-        executor.execute(() -> {
-            try {
-                Translator.Result result = Translator.translate(text, "auto", MainActivity.TARGET_LANG);
-                mainHandler.post(() -> {
-                    if (isFinishing() || isDestroyed()) return;
-                    progress.setVisibility(View.GONE);
-                    translatedText = result.translatedText;
-                    translatedView.setText(translatedText);
-                });
-            } catch (Exception e) {
-                mainHandler.post(() -> {
-                    if (isFinishing() || isDestroyed()) return;
-                    progress.setVisibility(View.GONE);
-                    translatedView.setText("Translation failed: " + e.getMessage());
-                });
-            }
-        });
+        viewModel = new ViewModelProvider(this).get(TranslateViewModel.class);
+        viewModel.getState().observe(this, this::render);
+        // Only on first creation; after rotation the ViewModel already has it.
+        if (viewModel.getState().getValue() == null) {
+            viewModel.translate(text, "auto", MainActivity.TARGET_LANG);
+        }
     }
 
-    @Override
-    protected void onDestroy() {
-        // Stop the worker thread so a dismissed dialog Activity doesn't leave a
-        // non-daemon thread lingering with a reference to this Activity.
-        executor.shutdownNow();
-        super.onDestroy();
+    private void render(TranslateViewModel.State s) {
+        boolean loading = s == null || s.loading;
+        progress.setVisibility(loading ? View.VISIBLE : View.GONE);
+        if (loading) {
+            translatedView.setText("");
+        } else if (s.errorRes != 0) {
+            translatedView.setText(s.errorRes);
+        } else {
+            translatedView.setText(s.translation);
+        }
+        copyButton.setEnabled(!loading && s.translation != null && !s.translation.isEmpty());
     }
 }

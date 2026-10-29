@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Translator</string>
+    <string name="process_text_label">Translate</string>
+    <string name="main_title">Translate to Arabic</string>
+    <string name="input_hint">Enter text in any language</string>
+    <string name="translate">Translate</string>
+    <string name="copy_translation">Copy translation</string>
+    <string name="copy">Copy</string>
+    <string name="close">Close</string>
+    <string name="copied">Copied</string>
+    <string name="tip_process_text">Tip: select text in any other app and choose \"Translate\" from the popup menu to translate it to Arabic instantly.</string>
+
+    <string name="error_offline">You\'re offline. Connect to the internet and try again.</string>
+    <string name="error_timeout">The translation service took too long to respond. Try again.</string>
+    <string name="error_rate_limited">Too many translations in a short time. Wait a minute and try again.</string>
+    <string name="error_server">The translation service is having problems. Try again shortly.</string>
+    <string name="error_bad_response">Got an unexpected response from the translation service.</string>
+    <string name="error_network">Couldn\'t reach the translation service. Check your connection.</string>
+</resources>
