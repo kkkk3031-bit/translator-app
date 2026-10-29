@@ -39,7 +39,8 @@
     <string name="all_languages">كل اللغات</string>
 
     <string name="history">السجل</string>
-    <string name="history_langs">%1$s ← %2$s</string>
+    <!-- Codes are Latin, so they render left-to-right: keep the → arrow. -->
+    <string name="history_langs">%1$s → %2$s</string>
     <string name="history_meta">%1$s · %2$s</string>
     <string name="history_empty">ستظهر ترجماتك هنا.</string>
     <string name="history_no_matches">لا توجد ترجمات تطابق بحثك.</string>
