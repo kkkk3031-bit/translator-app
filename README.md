@@ -26,7 +26,39 @@ Both use Google Translate's public `translate_a/single` endpoint (no API key req
 ```bash
 ./gradlew assembleDebug
 adb install -r app/build/outputs/apk/debug/app-debug.apk
-./gradlew testDebugUnitTest   # unit tests (no network needed)
 ```
 
 Requires JDK 17 and an Android SDK with platform 36 (`local.properties` → `sdk.dir`). `minSdk 26`, `targetSdk 35`.
+
+### Tests
+
+```bash
+./gradlew testDebugUnitTest            # JVM unit tests, no network or device needed
+./gradlew connectedDebugAndroidTest    # history database tests on a device/emulator
+./gradlew lintDebug
+```
+
+Note: `connectedDebugAndroidTest` uninstalls the app afterwards, which wipes its history and settings on that device.
+
+### Release build
+
+The release build is shrunk with R8 (about 2 MB vs about 7 MB for debug). To sign it, create a keystore once and a `keystore.properties` in the project root. Both are gitignored, so never commit them, and back up the keystore: you can't publish updates without it.
+
+```bash
+keytool -genkeypair -v -keystore translator-release.jks -alias translator \
+        -keyalg RSA -keysize 4096 -validity 10000
+```
+
+```properties
+# keystore.properties
+storeFile=translator-release.jks
+storePassword=...
+keyAlias=translator
+keyPassword=...
+```
+
+```bash
+./gradlew assembleRelease   # → app/build/outputs/apk/release/app-release.apk
+```
+
+Without `keystore.properties`, `assembleRelease` still builds, but the APK is unsigned (`app-release-unsigned.apk`).

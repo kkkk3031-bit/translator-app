@@ -29,12 +29,30 @@ import java.util.List;
  */
 final class GoogleTranslateEngine implements TranslationEngine {
 
+    /** One HTTP round trip for a single chunk; swappable in tests. */
+    interface Requester {
+        TranslationResult request(String text, String sourceLang, String targetLang)
+                throws TranslationException;
+    }
+
     static final int MAX_CHUNK_CHARS = 4500;
     private static final String ENDPOINT = "https://translate.googleapis.com/translate_a/single";
     private static final int TIMEOUT_MS = 15000;
-    private static final long RETRY_DELAY_MS = 800;
+    private static final long DEFAULT_RETRY_DELAY_MS = 800;
     private static final String USER_AGENT =
             "Mozilla/5.0 (Linux; Android) TranslatorApp/" + BuildConfig.VERSION_NAME;
+
+    private final Requester requester;
+    private final long retryDelayMs;
+
+    GoogleTranslateEngine() {
+        this(GoogleTranslateEngine::httpRequest, DEFAULT_RETRY_DELAY_MS);
+    }
+
+    GoogleTranslateEngine(Requester requester, long retryDelayMs) {
+        this.requester = requester;
+        this.retryDelayMs = retryDelayMs;
+    }
 
     @Override
     public TranslationResult translate(String text, String sourceLang, String targetLang)
@@ -63,20 +81,21 @@ final class GoogleTranslateEngine implements TranslationEngine {
     private TranslationResult translateWithRetry(String text, String sl, String tl)
             throws TranslationException {
         try {
-            return request(text, sl, tl);
+            return requester.request(text, sl, tl);
         } catch (TranslationException e) {
             if (!e.kind.isTransient()) throw e;
             try {
-                Thread.sleep(RETRY_DELAY_MS);
+                Thread.sleep(retryDelayMs);
             } catch (InterruptedException ie) {
                 Thread.currentThread().interrupt();
                 throw new TranslationException(TranslationException.Kind.CANCELLED, "Cancelled", ie);
             }
-            return request(text, sl, tl);
+            return requester.request(text, sl, tl);
         }
     }
 
-    private TranslationResult request(String text, String sl, String tl) throws TranslationException {
+    private static TranslationResult httpRequest(String text, String sl, String tl)
+            throws TranslationException {
         HttpURLConnection conn = null;
         try {
             URL url = new URL(ENDPOINT + "?client=gtx&dt=t&sl=" + enc(sl) + "&tl=" + enc(tl));

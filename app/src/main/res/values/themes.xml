@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Translator" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.Translator" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Material3.BottomSheetDialog</item>
+    </style>
 
     <style name="Theme.Translator.Popup" parent="Theme.Material3.DayNight.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:windowMinWidthMinor">90%</item>
+        <!-- Dialog themes don't set this, and the language sheet then fell back
+             to light colors under dark mode (white sheet, unreadable text). -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Material3.BottomSheetDialog</item>
     </style>
 </resources>

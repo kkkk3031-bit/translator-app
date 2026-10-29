@@ -33,7 +33,12 @@ final class HistoryStore extends SQLiteOpenHelper {
     }
 
     private HistoryStore(Context context) {
-        super(context, "history.db", null, 1);
+        this(context, "history.db");
+    }
+
+    /** @param name database file, or null for an in-memory database (tests). */
+    HistoryStore(Context context, String name) {
+        super(context, name, null, 1);
     }
 
     @Override
